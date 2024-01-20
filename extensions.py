@@ -25,11 +25,12 @@ class get_price:
         try:
             amount = float(amount)
         except ValueError:
-            raise ConvertionException(f'Не удалось обработать валюту {amount}')
+            raise ConvertionException(f'Не удалось обработать число {amount}')
 
         r = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym={quote_ticker}&tsyms={base_ticker}')
-        #total_base = int(json.loads(r.content)[keys[base]])*int(json.loads(r.content)[keys[amount]])
-        total_base = json.loads(r.content)[keys[base]]
 
-        return total_base
+        total_base = json.loads(r.content)[keys[base]]
+        total_cost = float(amount) * float(total_base)
+
+        return total_cost
 
